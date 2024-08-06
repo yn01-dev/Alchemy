@@ -5,9 +5,11 @@ namespace Alchemy.Editor.Elements
 {
     public sealed class HashSetField : HashMapFieldBase
     {
+        private readonly StyleSheet _styleSheet = Resources.Load<StyleSheet>("Elements/HashSetField-Styles");
+        
         public HashSetField(object collection, string label) : base(collection, label)
         {
-            Resources.Load<StyleSheet>("Elements/HashSetField-Styles");
+            styleSheets.Add(_styleSheet);
         }
 
         public override string CollectionTypeName => "HashSet";

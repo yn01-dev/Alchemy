@@ -1,27 +1,27 @@
-MethodButton > HelpBox {
+.method-button__help-box {
     margin-right: 0;
     margin-left: 0;
 }
 
-MethodButton > HelpBox > Button {
+.method-button__parameter-button {
     position: absolute;
     top: 1.5px;
     right: 1px;
     width: 100px;
 }
 
-MethodButton > HelpBox > Foldout {
+.method-button__foldout {
     flex-grow: 1;
 }
 
-MethodButton > HelpBox > Foldout > Toggle {
+Foldout.method-button__foldout > Toggle {
     margin-left: 0;
 }
 
-MethodButton > HelpBox > Foldout > #unity-content {
+Foldout.method-button__foldout > #unity-content {
     margin-top: 2px;
 }
 
-MethodButton > HelpBox > Foldout > GenericField {
+Foldout.method-button__foldout > GenericField {
     padding-right: 4px;
 }

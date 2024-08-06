@@ -252,8 +252,8 @@ namespace Alchemy.Editor.Drawers
             image = new Image();
 
             image.styleSheets.Add(_styleSheet);
-            image.AddToClassList("alchemy-attribute-preview_drawer-image");
-            image.AddToClassList("align-right");
+            image.AddToClassList("preview-attribute__image");
+            image.AddToClassList("preview-attribute__image--align-right");
             
             image.RegisterCallback<MouseDownEvent>(x =>
             {
@@ -311,7 +311,7 @@ namespace Alchemy.Editor.Drawers
             var title = new Label(att.TitleText);
             
             title.styleSheets.Add(_styleSheet);
-            title.AddToClassList("alchemy-attribute-title_drawer-title");
+            title.AddToClassList("title-attribute__title");
             
             parent.Insert(parent.IndexOf(TargetElement), title);
 
@@ -320,7 +320,7 @@ namespace Alchemy.Editor.Drawers
                 var subtitle = new Label(att.SubtitleText);
                 
                 subtitle.styleSheets.Add(_styleSheet);
-                subtitle.AddToClassList("alchemy-attribute-title_drawer-subtitle");
+                subtitle.AddToClassList("title-attribute__subtitle");
                 parent.Insert(parent.IndexOf(TargetElement), subtitle);
             }
 

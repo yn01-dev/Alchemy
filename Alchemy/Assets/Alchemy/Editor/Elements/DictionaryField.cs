@@ -7,10 +7,11 @@ namespace Alchemy.Editor.Elements
 {
     public sealed class DictionaryField : HashMapFieldBase
     {
+        private readonly StyleSheet _styleSheet = Resources.Load<StyleSheet>("Elements/DictionaryField-Styles");
+        
         public DictionaryField(object collection, string label) : base(collection, label)
         {
-            StyleSheet styleSheet = Resources.Load<StyleSheet>("Elements/DictionaryField-Styles");
-            styleSheets.Add(styleSheet);
+            styleSheets.Add(_styleSheet);
 
             if (collection != null)
             {
@@ -71,9 +72,10 @@ namespace Alchemy.Editor.Elements
         {
             public Item(object collection, object keyValuePair)
             {
-                AddToClassList("alchemy-dictionary_item");
+                AddToClassList("dictionary-field__item");
                 
                 var box = new Box();
+                box.AddToClassList("dictionary-field__item__box");
 
                 kvType = keyValuePair.GetType();
                 var keyType = kvType.GenericTypeArguments[0];
@@ -85,22 +87,23 @@ namespace Alchemy.Editor.Elements
                 this.collection = collection;
                 this.keyValuePair = keyValuePair;
 
-                var keyValueElement = new VisualElement { name = "key-value-element" };
+                var keyValueElement = new VisualElement();
+                keyValueElement.AddToClassList("dictionary-field__item__key-value-element");
                 box.Add(keyValueElement);
 
-                keyField = new GenericField(key, keyType, KeyName) { name = "key-field" };
+                keyField = new GenericField(key, keyType, KeyName);
+                keyField.AddToClassList("dictionary-field__item__key-field");
                 keyField.OnValueChanged += SetKey;
                 keyValueElement.Add(keyField);
 
-                valueField = new GenericField(value, valueType, ValueName) { name = "value-field" };
+                valueField = new GenericField(value, valueType, ValueName);
+                valueField.AddToClassList("dictionary-field__item__value-field");
                 valueField.OnValueChanged += SetValue;
                 keyValueElement.Add(valueField);
 
-                var closeButton = new Button(() => OnClose?.Invoke())
-                {
-                    name = "close-button",
-                    text = "X"
-                };
+                var closeButton = new Button(() => OnClose?.Invoke()) { text = "X" };
+                closeButton.AddToClassList("dictionary-field__item__close-button");
+                
                 box.Add(closeButton);
                 Add(box);
             }

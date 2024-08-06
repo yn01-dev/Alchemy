@@ -7,21 +7,24 @@ namespace Alchemy.Editor.Elements
 {
     public abstract class HashMapFieldBase : VisualElement
     {
+        private readonly StyleSheet _styleSheet = Resources.Load<StyleSheet>("Elements/HashMapFieldBase-Styles");
+        
         public HashMapFieldBase(object collection, string label)
         {
-            styleSheets.Add(Resources.Load<StyleSheet>("Elements/HashMapFieldBase-Styles"));
+            styleSheets.Add(_styleSheet);
             
             this.collection = collection;
 
             var foldout = new Foldout { text = label };
-            foldout.AddToClassList("alchemy-hash_map_base-foldout");
+            foldout.AddToClassList("hash-map-field-base__foldout");
             Add(foldout);
-            
-            contents = new() { name = "contents" };
-            contents.AddToClassList("alchemy-hash_map_base-contents");
+
+            contents = new();
+            contents.AddToClassList("hash-map-field-base__contents");
             foldout.Add(contents);
 
-            inputForm = new() { name = "input-form" };
+            inputForm = new();
+            inputForm.AddToClassList("hash-map-field-base__input-form");
             foldout.Add(inputForm);
 
             addButton = new Button(() =>
@@ -30,8 +33,7 @@ namespace Alchemy.Editor.Elements
                 else StartInput();
             })
             { text = "+ Add" };
-            
-            addButton.AddToClassList("alchemy-hash_map_base-add_button");
+            addButton.AddToClassList("hash-map-field-base__add-button");
             
             foldout.Add(addButton);
 
@@ -131,8 +133,11 @@ namespace Alchemy.Editor.Elements
             if (i == 0)
             {
                 var box = new Box();
+                box.AddToClassList("hash-map-field-base__empty-box");
+                
                 var label = new Label(CollectionTypeName + " is empty.");
-              
+                label.AddToClassList("hash-map-field-base__empty-label");
+                
                 box.Add(label);
 
                 inputForm.Add(box);

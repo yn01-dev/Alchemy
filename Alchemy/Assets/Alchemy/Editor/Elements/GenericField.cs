@@ -12,12 +12,13 @@ namespace Alchemy.Editor.Elements
     /// </summary>
     public sealed class GenericField : VisualElement
     {
+        private readonly StyleSheet _styleSheet = Resources.Load<StyleSheet>("Elements/GenericField-Styles");
+        
         const string CreateButtonText = "Create...";
 
         public GenericField(object obj, Type type, string label,bool isDelayed = false)
         {
-            StyleSheet styleSheet = Resources.Load<StyleSheet>("Elements/GenericField-Styles");
-            styleSheets.Add(styleSheet);
+            styleSheets.Add(_styleSheet);
 
             Build(obj, type, label, isDelayed);
             GUIHelper.ScheduleAdjustLabelWidth(this);
@@ -30,51 +31,46 @@ namespace Alchemy.Editor.Elements
             // Add [Create...] button
             if (obj == null && !typeof(UnityEngine.Object).IsAssignableFrom(type))
             {
-                var nullLabelElement = new VisualElement { name = "null-label-element" };
-                nullLabelElement.Add(new Label(label + " (Null)") { name = "null-label" });
+                var nullableArea = new VisualElement();
+                nullableArea.AddToClassList("generic-field__nullable-area");
+
+                var nullableLabel = new Label(label + " (Null)");
+                nullableArea.AddToClassList("generic-field__nullable-area__label");
+                nullableArea.Add(nullableLabel);
 
                 // TODO: support polymorphism
                 if (type == typeof(string))
                 {
-                    nullLabelElement.Add(new Button(() =>
+                    nullableArea.Add(new Button(() =>
                     {
                         var instance = "";
                         Build(instance, type, label, isDelayed);
                         OnValueChanged?.Invoke(instance);
                     })
-                    {
-                        name = "string-create-button",
-                        text = CreateButtonText
-                    });
+                    { text = CreateButtonText });
                 }
                 else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) // nullable
                 {
-                    nullLabelElement.Add(new Button(() =>
+                    nullableArea.Add(new Button(() =>
                     {
                         var instance = Activator.CreateInstance(type, Activator.CreateInstance(type.GenericTypeArguments[0]));
                         Build(instance, type, label, isDelayed);
                         OnValueChanged?.Invoke(instance);
                     })
-                    {
-                        name = "nullable-create-button",
-                        text = CreateButtonText
-                    });
+                    { text = CreateButtonText });
                 }
                 else if (TypeHelper.HasDefaultConstructor(type))
                 {
-                    nullLabelElement.Add(new Button(() =>
+                    nullableArea.Add(new Button(() =>
                     {
                         var instance = TypeHelper.CreateDefaultInstance(type);
                         Build(instance, type, label, isDelayed);
                         OnValueChanged?.Invoke(instance);
                     })
-                    {
-                        name = "default-create-button",
-                        text = CreateButtonText
-                    });
+                    { text = CreateButtonText });
                 }
 
-                Add(nullLabelElement);
+                Add(nullableArea);
 
                 return;
             }

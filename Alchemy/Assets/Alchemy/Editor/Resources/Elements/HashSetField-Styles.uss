@@ -1,14 +1,10 @@
-Item.alchemy-hash_set_item > Box {
+.hash-set-field__item__box {
     margin-right: -2px;
     margin-bottom: 3.5px;
     flex-direction: row;
 }
 
-Item.alchemy-hash_set_item > Box > GenericField {
-    flex-grow: 1;
-}
-
-Item.alchemy-hash_set_item > Box > Button#close-button {
+.hash-set-field__item__close-button {
     width: 18px;
     height: 18px;
     -unity-font-style: bold;

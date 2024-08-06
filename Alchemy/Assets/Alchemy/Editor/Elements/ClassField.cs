@@ -8,11 +8,12 @@ namespace Alchemy.Editor.Elements
 {
     public sealed class ClassField : VisualElement
     {
+        private readonly StyleSheet _styleSheet = Resources.Load<StyleSheet>("Elements/ClassField-Styles");
+        
         public ClassField(Type type, string label) : this(TypeHelper.CreateDefaultInstance(type), type, label) { }
         public ClassField(object obj, Type type, string label)
         {
-            StyleSheet styleSheet = Resources.Load<StyleSheet>("Elements/ClassField-Styles");
-            styleSheets.Add(styleSheet);
+            styleSheets.Add(_styleSheet);
 
             var foldout = new Foldout
             {
@@ -49,7 +50,7 @@ namespace Alchemy.Editor.Elements
                 foreach (var member in node.Members.OrderByAttributeThenByMemberType())
                 {
                     var element = new ReflectionField(obj, member);
-                    element.AddToClassList("alchemy-class_field-element");
+                    element.AddToClassList("class-field__reflection-field");
                     element.OnValueChanged += x => OnValueChanged?.Invoke(obj);
 
                     var e = node.Drawer?.GetGroupElement(member.GetCustomAttribute<PropertyGroupAttribute>());

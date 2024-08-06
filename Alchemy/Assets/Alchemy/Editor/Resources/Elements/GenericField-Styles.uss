@@ -1,11 +1,11 @@
-GenericField > #null-label-element {
+.generic-field__nullable-area {
     width: 100%;
     height: 20px;
     padding-left: 3px;
     flex-direction: row;
 }
 
-GenericField > #null-label-element > Label#null-label {
+.generic-field__nullable-area__label {
     flex-grow: 1;
     -unity-text-align: middle-left;
 }

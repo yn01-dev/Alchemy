@@ -1,4 +1,4 @@
-Image.alchemy-attribute-preview_drawer-image {
+.preview-attribute__image {
     width: 40px;
     height: 40px;
     border-top-width: 1px;
@@ -15,18 +15,18 @@ Image.alchemy-attribute-preview_drawer-image {
     -unity-background-scale-mode: scale-to-fit;
 }
 
-Image.alchemy-attribute-preview_drawer-image:hover {
+.preview-attribute__image:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-Image.alchemy-attribute-preview_drawer-image.align-right {
+.preview-attribute__image.preview-attribute__image--align-right {
     align-self: flex-end;
 }
 
-Image.alchemy-attribute-preview_drawer-image.align-center {
+.preview-attribute__image.preview-attribute__image--align-center {
     align-self: center;
 }
 
-Image.alchemy-attribute-preview_drawer-image.align-left {
+.preview-attribute__image.preview-attribute__image--align-left {
     align-self: flex-start;
 }

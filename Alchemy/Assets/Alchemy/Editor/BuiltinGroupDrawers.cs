@@ -19,7 +19,7 @@ namespace Alchemy.Editor.Drawers
         {
             Box box = new();
             box.styleSheets.Add(_styleSheet);
-            box.AddToClassList("alchemy-group_attribute-group_drawer-box");
+            box.AddToClassList("group__box");
             return box;
         }
     }
@@ -34,7 +34,7 @@ namespace Alchemy.Editor.Drawers
             var helpBox = new HelpBox { text = label };
             
             helpBox.styleSheets.Add(_styleSheet);
-            helpBox.AddToClassList("alchemy-group_attribute-box_group_drawer-help_box");
+            helpBox.AddToClassList("box-group__help-box");
             
             return helpBox;
         }
@@ -69,7 +69,7 @@ namespace Alchemy.Editor.Drawers
             rootElement.Remove(rootElement.Q<Label>());
 
             rootElement.styleSheets.Add(_styleSheet);
-            rootElement.AddToClassList("alchemy-group_attribute-tab_group_drawer-help_box");
+            rootElement.AddToClassList("tab-group__help-box");
             
             var tabGUIElement = new IMGUIContainer(() =>
             {
@@ -90,10 +90,13 @@ namespace Alchemy.Editor.Drawers
                     kv.Value.style.display = keyArrayCache[tabIndex] == kv.Key ? DisplayStyle.Flex : DisplayStyle.None;
                 }
             });
+            tabGUIElement.AddToClassList("tab-group__tab-section");
             
             rootElement.Add(tabGUIElement);
 
-            pageRoot = new VisualElement { name = "page-root" };
+            pageRoot = new VisualElement();
+            pageRoot.AddToClassList("tab-group__page-root");
+            
             rootElement.Add(pageRoot);
             
             return rootElement;
@@ -107,7 +110,7 @@ namespace Alchemy.Editor.Drawers
             if (!tabElements.TryGetValue(tabName, out var element))
             {
                 element = new VisualElement();
-                element.AddToClassList("tab-page");
+                element.AddToClassList("tab-group__tab-page");
                 pageRoot.Add(element);
                 tabElements.Add(tabName, element);
 
@@ -135,7 +138,7 @@ namespace Alchemy.Editor.Drawers
             };
             
             foldout.styleSheets.Add(_styleSheet);
-            foldout.AddToClassList("alchemy-group_attribute-foldout_group_drawer-foldout");
+            foldout.AddToClassList("foldout-group__foldout");
 
             foldout.RegisterValueChangedCallback(x =>
             {
@@ -156,7 +159,7 @@ namespace Alchemy.Editor.Drawers
             var root = new VisualElement();
             
             root.styleSheets.Add(_styleSheet);
-            root.AddToClassList("alchemy-group_attribute-horizontal_group_drawer-visual_element");
+            root.AddToClassList("horizontal-group__main-element");
 
             static void AdjustLabel(PropertyField element, VisualElement inspector, int childCount)
             {

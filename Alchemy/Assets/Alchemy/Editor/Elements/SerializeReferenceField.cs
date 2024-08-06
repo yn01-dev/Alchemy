@@ -14,9 +14,11 @@ namespace Alchemy.Editor.Elements
     /// </summary>
     public sealed class SerializeReferenceField : VisualElement
     {
+        private readonly StyleSheet _styleSheet = Resources.Load<StyleSheet>("Elements/SerializeReferenceField-Styles");
+            
         public SerializeReferenceField(SerializedProperty property)
         {
-            styleSheets.Add(Resources.Load<StyleSheet>("Elements/SerializeReferenceField-Styles"));
+            styleSheets.Add(_styleSheet);
             
             Assert.IsTrue(property.propertyType == SerializedPropertyType.ManagedReference);
 
@@ -27,6 +29,7 @@ namespace Alchemy.Editor.Elements
             {
                 text = ObjectNames.NicifyVariableName(property.displayName)
             };
+            foldout.AddToClassList("serialize-reference-field__foldout");
             foldout.BindProperty(property);
             
             Add(foldout);
@@ -84,6 +87,7 @@ namespace Alchemy.Editor.Elements
                     dropdown.Show(position);
                 }
             });
+            buttonContainer.AddToClassList("serialize-reference-field__pick-reference-button");
 
             schedule.Execute(() =>
             {

@@ -46,13 +46,15 @@ namespace Alchemy.Editor.Elements
         {
             public Item(object collection, object elementObj, string label)
             {
-                AddToClassList("alchemy-hash_set_item");
+                AddToClassList("hash-set-field__item");
                 
                 var box = new Box();
+                box.AddToClassList("hash-set-field__item__box");
 
                 var valueType = elementObj == null ? collection.GetType().GenericTypeArguments[0] : elementObj.GetType();
 
                 inputField = new GenericField(elementObj, valueType, label);
+                inputField.AddToClassList("hash-set-field__item__input-field");
                 inputField.OnValueChanged += x =>
                 {
                     value = x;
@@ -65,6 +67,8 @@ namespace Alchemy.Editor.Elements
                     name = "close-button",
                     text = "X"
                 };
+                closeButton.AddToClassList("hash-set-field__item__close-button");
+                
                 box.Add(closeButton);
                 Add(box);
             }

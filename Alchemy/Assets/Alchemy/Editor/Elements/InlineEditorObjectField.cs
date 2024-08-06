@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using Alchemy.Inspector;
+using UnityEngine;
 
 namespace Alchemy.Editor.Elements
 {
@@ -14,6 +15,8 @@ namespace Alchemy.Editor.Elements
     {
         public InlineEditorObjectField(SerializedProperty property, Type type)
         {
+            styleSheets.Add(Resources.Load<StyleSheet>("Elements/InlineEditor-Styles"));
+            
             Assert.IsTrue(property.propertyType == SerializedPropertyType.ObjectReference);
 
             style.minHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
@@ -30,13 +33,12 @@ namespace Alchemy.Editor.Elements
 
             field = new ObjectField()
             {
+                name = "object-field",
                 label = ObjectNames.NicifyVariableName(property.displayName),
                 objectType = type,
                 allowSceneObjects = !property.GetFieldInfo().HasCustomAttribute<AssetsOnlyAttribute>(),
                 value = property.objectReferenceValue
             };
-            field.style.position = Position.Absolute;
-            field.style.width = Length.Percent(100f);
             GUIHelper.ScheduleAdjustLabelWidth(field);
 
             OnPropertyChanged(property);
@@ -96,7 +98,6 @@ namespace Alchemy.Editor.Elements
             toggle.style.display = isNull ? DisplayStyle.None : DisplayStyle.Flex;
             if (!isNull)
             {
-                foldout.Add(new VisualElement() { style = { height = EditorGUIUtility.standardVerticalSpacing } });
                 var so = new SerializedObject(property.objectReferenceValue);
                 InspectorHelper.BuildElements(so, foldout, so.targetObject, name => so.FindProperty(name));
                 this.Bind(so);

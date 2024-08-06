@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,7 +5,10 @@ namespace Alchemy.Editor.Elements
 {
     public sealed class HashSetField : HashMapFieldBase
     {
-        public HashSetField(object collection, string label) : base(collection, label) { }
+        public HashSetField(object collection, string label) : base(collection, label)
+        {
+            Resources.Load<StyleSheet>("Elements/HashSetField-Styles");
+        }
 
         public override string CollectionTypeName => "HashSet";
 
@@ -44,19 +46,13 @@ namespace Alchemy.Editor.Elements
         {
             public Item(object collection, object elementObj, string label)
             {
-                var box = new Box()
-                {
-                    style = {
-                        marginBottom = 3.5f,
-                        marginRight = -2f,
-                        flexDirection = FlexDirection.Row
-                    }
-                };
+                AddToClassList("alchemy-hash_set_item");
+                
+                var box = new Box();
 
                 var valueType = elementObj == null ? collection.GetType().GenericTypeArguments[0] : elementObj.GetType();
 
                 inputField = new GenericField(elementObj, valueType, label);
-                inputField.style.flexGrow = 1f;
                 inputField.OnValueChanged += x =>
                 {
                     value = x;
@@ -66,13 +62,8 @@ namespace Alchemy.Editor.Elements
 
                 var closeButton = new Button(() => OnClose?.Invoke())
                 {
-                    style = {
-                        width = EditorGUIUtility.singleLineHeight,
-                        height = EditorGUIUtility.singleLineHeight,
-                        unityFontStyleAndWeight = FontStyle.Bold,
-                        fontSize = 10f
-                    },
-                    text = "X",
+                    name = "close-button",
+                    text = "X"
                 };
                 box.Add(closeButton);
                 Add(box);

@@ -1,0 +1,4 @@
+VisualElement.alchemy-group_attribute-horizontal_group_drawer-visual_element {
+    width: 100%;
+    flex-direction: row;
+}

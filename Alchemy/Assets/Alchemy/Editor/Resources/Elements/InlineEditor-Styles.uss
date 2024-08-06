@@ -1,0 +1,8 @@
+InlineEditorObjectField > ObjectField#object-field {
+    position: absolute;
+    width: 100%;
+}
+
+InlineEditorObjectField > Foldout > #unity-content {
+    padding-top: 2px;
+}

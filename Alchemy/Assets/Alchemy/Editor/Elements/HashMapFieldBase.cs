@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,19 +9,19 @@ namespace Alchemy.Editor.Elements
     {
         public HashMapFieldBase(object collection, string label)
         {
+            styleSheets.Add(Resources.Load<StyleSheet>("Elements/HashMapFieldBase-Styles"));
+            
             this.collection = collection;
 
-            var foldout = new Foldout()
-            {
-                text = label
-            };
+            var foldout = new Foldout { text = label };
+            foldout.AddToClassList("alchemy-hash_map_base-foldout");
             Add(foldout);
-            foldout.Q<Label>().style.unityFontStyleAndWeight = FontStyle.Bold;
-
-            contents = new();
+            
+            contents = new() { name = "contents" };
+            contents.AddToClassList("alchemy-hash_map_base-contents");
             foldout.Add(contents);
 
-            inputForm = new();
+            inputForm = new() { name = "input-form" };
             foldout.Add(inputForm);
 
             addButton = new Button(() =>
@@ -30,16 +29,11 @@ namespace Alchemy.Editor.Elements
                 if (isInputting) EndInput();
                 else StartInput();
             })
-            {
-                style = {
-                    alignSelf = Align.FlexEnd,
-                    minWidth = 60f
-                },
-                text = "+ Add"
-            };
+            { text = "+ Add" };
+            
+            addButton.AddToClassList("alchemy-hash_map_base-add_button");
+            
             foldout.Add(addButton);
-
-            foldout.Add(new VisualElement() { style = { minHeight = 4f } });
 
             Rebuild();
         }
@@ -137,12 +131,8 @@ namespace Alchemy.Editor.Elements
             if (i == 0)
             {
                 var box = new Box();
-                box.style.minHeight = EditorGUIUtility.singleLineHeight * 1.2f;
-                box.style.paddingLeft = 6f;
-
                 var label = new Label(CollectionTypeName + " is empty.");
-                label.style.height = Length.Percent(100f);
-                label.style.unityTextAlign = TextAnchor.MiddleLeft;
+              
                 box.Add(label);
 
                 inputForm.Add(box);

@@ -16,6 +16,8 @@ namespace Alchemy.Editor.Elements
     {
         public SerializeReferenceField(SerializedProperty property)
         {
+            styleSheets.Add(Resources.Load<StyleSheet>("Elements/SerializeReferenceField-Styles"));
+            
             Assert.IsTrue(property.propertyType == SerializedPropertyType.ManagedReference);
 
             style.flexDirection = FlexDirection.Row;
@@ -25,8 +27,8 @@ namespace Alchemy.Editor.Elements
             {
                 text = ObjectNames.NicifyVariableName(property.displayName)
             };
-            foldout.style.flexGrow = 1f;
             foldout.BindProperty(property);
+            
             Add(foldout);
 
             buttonContainer = new IMGUIContainer(() =>
@@ -94,10 +96,7 @@ namespace Alchemy.Editor.Elements
                 buttonContainer.style.width = GUIHelper.CalculateFieldWidth(buttonContainer, visualTree) -
                     (buttonContainer.GetFirstAncestorOfType<Foldout>() != null ? 18f : 0f);
             });
-
-            buttonContainer.style.position = Position.Absolute;
-            buttonContainer.style.top = EditorGUIUtility.standardVerticalSpacing * 0.5f;
-            buttonContainer.style.right = 0f;
+            
             Add(buttonContainer);
 
             Rebuild(property);

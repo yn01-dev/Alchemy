@@ -1,0 +1,22 @@
+Button.alchemy-hash_map_base-add_button {
+    min-width: 60px;
+    align-items: flex-end;
+}
+
+Foldout.alchemy-hash_map_base-foldout > Toggle > VisualElement > Label {
+    -unity-font-style: bold;
+}
+
+Foldout.alchemy-hash_map_base-foldout > #unity-content {
+    margin-bottom: 4px;
+}
+
+Foldout.alchemy-hash_map_base-foldout > #input-form > Box {
+    min-height: 26px;
+    padding-left: 6px;
+}
+
+Foldout.alchemy-hash_map_base-foldout > #input-form > Box > Label {
+    width: 100%;
+    -unity-text-align: middle-left;
+}

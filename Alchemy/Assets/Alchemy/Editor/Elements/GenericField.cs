@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -17,6 +16,9 @@ namespace Alchemy.Editor.Elements
 
         public GenericField(object obj, Type type, string label,bool isDelayed = false)
         {
+            StyleSheet styleSheet = Resources.Load<StyleSheet>("Elements/GenericField-Styles");
+            styleSheets.Add(styleSheet);
+
             Build(obj, type, label, isDelayed);
             GUIHelper.ScheduleAdjustLabelWidth(this);
         }
@@ -28,23 +30,8 @@ namespace Alchemy.Editor.Elements
             // Add [Create...] button
             if (obj == null && !typeof(UnityEngine.Object).IsAssignableFrom(type))
             {
-                var nullLabelElement = new VisualElement()
-                {
-                    style = {
-                        width = Length.Percent(100f),
-                        height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing,
-                        paddingLeft = 3f,
-                        flexDirection = FlexDirection.Row
-                    }
-                };
-
-                nullLabelElement.Add(new Label(label + " (Null)")
-                {
-                    style = {
-                        flexGrow = 1f,
-                        unityTextAlign = TextAnchor.MiddleLeft
-                    }
-                });
+                var nullLabelElement = new VisualElement { name = "null-label-element" };
+                nullLabelElement.Add(new Label(label + " (Null)") { name = "null-label" });
 
                 // TODO: support polymorphism
                 if (type == typeof(string))
@@ -56,6 +43,7 @@ namespace Alchemy.Editor.Elements
                         OnValueChanged?.Invoke(instance);
                     })
                     {
+                        name = "string-create-button",
                         text = CreateButtonText
                     });
                 }
@@ -68,6 +56,7 @@ namespace Alchemy.Editor.Elements
                         OnValueChanged?.Invoke(instance);
                     })
                     {
+                        name = "nullable-create-button",
                         text = CreateButtonText
                     });
                 }
@@ -80,6 +69,7 @@ namespace Alchemy.Editor.Elements
                         OnValueChanged?.Invoke(instance);
                     })
                     {
+                        name = "default-create-button",
                         text = CreateButtonText
                     });
                 }

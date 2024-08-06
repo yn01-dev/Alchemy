@@ -1,0 +1,23 @@
+HelpBox.alchemy-group_attribute-tab_group_drawer-help_box {
+    width: 100%;
+    margin-top: 3px;
+    flex-direction: column;
+    overflow: hidden;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+HelpBox.alchemy-group_attribute-tab_group_drawer-help_box > IMGUIContainer {
+    align-self: stretch;
+}
+
+HelpBox.alchemy-group_attribute-tab_group_drawer-help_box > #page-root {
+    width: 100%;
+}
+
+HelpBox.alchemy-group_attribute-tab_group_drawer-help_box > VisualElement.tab-page {
+    width: 100%;
+}

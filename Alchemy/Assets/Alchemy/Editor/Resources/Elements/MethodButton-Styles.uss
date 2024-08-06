@@ -1,0 +1,27 @@
+MethodButton > HelpBox {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+MethodButton > HelpBox > Button {
+    position: absolute;
+    top: 1.5px;
+    right: 1px;
+    width: 100px;
+}
+
+MethodButton > HelpBox > Foldout {
+    flex-grow: 1;
+}
+
+MethodButton > HelpBox > Foldout > Toggle {
+    margin-left: 0;
+}
+
+MethodButton > HelpBox > Foldout > #unity-content {
+    margin-top: 2px;
+}
+
+MethodButton > HelpBox > Foldout > GenericField {
+    padding-right: 4px;
+}

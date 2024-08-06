@@ -1,0 +1,13 @@
+SerializeReferenceField > .unity-imgui-container {
+    position: absolute;
+    right: 2px;
+    top: 0;
+}
+
+SerializeReferenceField > Foldout {
+    flex-grow: 1;
+}
+
+SerializeReferenceField > Foldout > #unity-content {
+    padding-right: 4px;
+}

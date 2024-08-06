@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +9,9 @@ namespace Alchemy.Editor.Elements
     {
         public DictionaryField(object collection, string label) : base(collection, label)
         {
+            StyleSheet styleSheet = Resources.Load<StyleSheet>("Elements/DictionaryField-Styles");
+            styleSheets.Add(styleSheet);
+
             if (collection != null)
             {
                 keyType = collection.GetType().GenericTypeArguments[0];
@@ -69,14 +71,9 @@ namespace Alchemy.Editor.Elements
         {
             public Item(object collection, object keyValuePair)
             {
-                var box = new Box()
-                {
-                    style = {
-                        marginBottom = 3.5f,
-                        marginRight = -2f,
-                        flexDirection = FlexDirection.Row
-                    }
-                };
+                AddToClassList("alchemy-dictionary_item");
+                
+                var box = new Box();
 
                 kvType = keyValuePair.GetType();
                 var keyType = kvType.GenericTypeArguments[0];
@@ -88,38 +85,21 @@ namespace Alchemy.Editor.Elements
                 this.collection = collection;
                 this.keyValuePair = keyValuePair;
 
-                var keyValueElement = new VisualElement()
-                {
-                    style = {
-                        flexDirection = FlexDirection.Column,
-                        flexGrow = 1f
-                    }
-                };
+                var keyValueElement = new VisualElement { name = "key-value-element" };
                 box.Add(keyValueElement);
 
-                keyField = new GenericField(key, keyType, KeyName)
-                {
-                    style = { flexGrow = 1f }
-                };
+                keyField = new GenericField(key, keyType, KeyName) { name = "key-field" };
                 keyField.OnValueChanged += SetKey;
                 keyValueElement.Add(keyField);
 
-                valueField = new GenericField(value, valueType, ValueName)
-                {
-                    style = { flexGrow = 1f }
-                };
+                valueField = new GenericField(value, valueType, ValueName) { name = "value-field" };
                 valueField.OnValueChanged += SetValue;
                 keyValueElement.Add(valueField);
 
                 var closeButton = new Button(() => OnClose?.Invoke())
                 {
-                    style = {
-                        width = EditorGUIUtility.singleLineHeight,
-                        height = EditorGUIUtility.singleLineHeight,
-                        unityFontStyleAndWeight = FontStyle.Bold,
-                        fontSize = 10f
-                    },
-                    text = "X",
+                    name = "close-button",
+                    text = "X"
                 };
                 box.Add(closeButton);
                 Add(box);

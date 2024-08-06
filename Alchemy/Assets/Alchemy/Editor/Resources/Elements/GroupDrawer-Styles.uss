@@ -1,0 +1,7 @@
+Box.alchemy-group_attribute-group_drawer-box {
+    width: 100%;
+    margin-top: 3px;
+    padding-bottom: 2px;
+    padding-right: 2px;
+    padding-left: 1px;
+}

@@ -1,0 +1,18 @@
+HelpBox.alchemy-group_attribute-box_group_drawer-help_box {
+    width: 100%;
+    margin-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 5px;
+    padding-left: 3px;
+    flex-direction: column;
+    margin-left: 0;
+}
+
+HelpBox.alchemy-group_attribute-box_group_drawer-help_box > Label.unity-help-box__label {
+    top: 2px;
+    left: 2px;
+    font-size: 12px;
+    min-height: 18px;
+    -unity-font-style: bold;
+    align-self: stretch;
+}

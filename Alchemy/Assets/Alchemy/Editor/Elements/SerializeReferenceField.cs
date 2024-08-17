@@ -127,6 +127,9 @@ namespace Alchemy.Editor.Elements
             }
 
             this.Bind(property.serializedObject);
+            
+            AddToClassList(property.managedReferenceValue == null ? "serialize-reference-field--empty" : "serialize-reference-field--populated");
+            RemoveFromClassList(property.managedReferenceValue != null ? "serialize-reference-field--empty" : "serialize-reference-field--populated");
         }
     }
 }

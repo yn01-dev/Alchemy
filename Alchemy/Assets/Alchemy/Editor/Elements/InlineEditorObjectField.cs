@@ -40,6 +40,8 @@ namespace Alchemy.Editor.Elements
                 value = property.objectReferenceValue
             };
             field.AddToClassList("inline-editor__object-field");
+
+            SetSelectors(property.objectReferenceValue);
             
             GUIHelper.ScheduleAdjustLabelWidth(field);
 
@@ -49,10 +51,18 @@ namespace Alchemy.Editor.Elements
                 property.objectReferenceValue = x.newValue;
                 property.serializedObject.ApplyModifiedProperties();
                 OnPropertyChanged(property);
+
+                SetSelectors(property.objectReferenceValue);
             });
 
             Add(foldout);
             Add(field);
+            
+            void SetSelectors(UnityEngine.Object propertyObjectReferenceValue)
+            {
+                AddToClassList(propertyObjectReferenceValue == null ? "inline-editor--empty" : "inline-editor--populated");
+                RemoveFromClassList(propertyObjectReferenceValue != null ? "inline-editor--empty" : "inline-editor--populated");
+            }
         }
 
         readonly Foldout foldout;

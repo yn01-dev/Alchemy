@@ -16,3 +16,10 @@
     -unity-font-style: bold;
     align-self: stretch;
 }
+
+.box-group__help-box__child-foldout {
+}
+
+.box-group__help-box__child-foldout > Toggle {
+    margin-left: 0;
+}

@@ -2,3 +2,6 @@
     width: 100%;
     flex-direction: row;
 }
+
+.horizontal-group__property-field__label {
+}

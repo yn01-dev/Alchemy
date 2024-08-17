@@ -20,6 +20,9 @@ namespace Alchemy.Editor.Drawers
             Box box = new();
             box.styleSheets.Add(_styleSheet);
             box.AddToClassList("group__box");
+            
+            GUIHelper.ModifyChildFoldouts(box, "group__box__child-foldout");
+            
             return box;
         }
     }
@@ -35,6 +38,8 @@ namespace Alchemy.Editor.Drawers
             
             helpBox.styleSheets.Add(_styleSheet);
             helpBox.AddToClassList("box-group__help-box");
+
+            GUIHelper.ModifyChildFoldouts(helpBox, "box-group__help-box__child-foldout");
             
             return helpBox;
         }
@@ -115,6 +120,8 @@ namespace Alchemy.Editor.Drawers
                 tabElements.Add(tabName, element);
 
                 keyArrayCache = tabElements.Keys.ToArray();
+                
+                GUIHelper.ModifyChildFoldouts(element, "tab-group__tab-page__child-foldout");
             }
 
             return element;
@@ -161,36 +168,45 @@ namespace Alchemy.Editor.Drawers
             root.styleSheets.Add(_styleSheet);
             root.AddToClassList("horizontal-group__main-element");
 
-            static void AdjustLabel(PropertyField element, VisualElement inspector, int childCount)
-            {
-                if (element.childCount == 0) return;
-                if (element.Q<Foldout>() != null) return;
-
-                var field = element[0];
-                field.RemoveFromClassList("unity-base-field__aligned");
-
-                var labelElement = field.Q<Label>();
-                if (labelElement != null)
-                    labelElement.style.width = GUIHelper.CalculateLabelWidth(element, inspector) * 0.8f / childCount;
-            }
-
-            root.schedule.Execute(() =>
+            root.RegisterCallback<GeometryChangedEvent>(_ =>
             {
                 if (root.childCount <= 1) return;
 
                 var visualTree = root.panel.visualTree;
-
+                
                 foreach (var field in root.Query<PropertyField>().Build())
                 {
-                    field.schedule.Execute(() => AdjustLabel(field, visualTree, root.childCount));
+                    AdjustLabel(field, visualTree, root.childCount);
                 }
                 foreach (var field in root.Query<GenericField>().Children<PropertyField>().Build())
                 {
-                    field.schedule.Execute(() => AdjustLabel(field, visualTree, root.childCount));
+                    AdjustLabel(field, visualTree, root.childCount);
                 }
             });
-
+            
             return root;
+
+            static void AdjustLabel(PropertyField element, VisualElement inspector, int childCount)
+            {
+                if (element.childCount == 0) return;
+                if (element.Q<Foldout>() != null) return;
+              
+                var field = element[0];
+                field.RemoveFromClassList("unity-base-field__aligned");
+                
+                var labelElement = field.Q<Label>();
+                if (labelElement != null && !labelElement.ClassListContains("horizontal-group__property-field__label"))
+                {
+                    labelElement.AddToClassList("horizontal-group__property-field__label");
+                    labelElement.RegisterCallback<GeometryChangedEvent>(_ =>
+                    {
+                        //I'd like to use stylesheets here, but it seems values are set inline somewhere.
+                        //Therefore we too must inline, aggressively.
+                        labelElement.style.minWidth = 0f;
+                        labelElement.style.width = GUIHelper.CalculateLabelWidth(element, inspector) * 0.8f / childCount;
+                    });
+                }
+            }
         }
     }
     [CustomGroupDrawer(typeof(InlineGroupAttribute))]

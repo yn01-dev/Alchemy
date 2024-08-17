@@ -21,3 +21,10 @@
 .tab-group__tab-page {
     width: 100%;
 }
+
+.tab-group__tab-page__child-foldout {
+}
+
+.tab-group__tab-page__child-foldout > Toggle {
+    margin-left: 0;
+}

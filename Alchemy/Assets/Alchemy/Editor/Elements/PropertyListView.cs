@@ -18,6 +18,7 @@ namespace Alchemy.Editor.Elements
 
             var parentObj = property.GetDeclaredObject();
             var events = property.GetAttribute<OnListViewChangedAttribute>(true);
+            VisualElement lastFocusedElement = null;
 
             listView = GUIHelper.CreateListViewFromFieldInfo(parentObj, property.GetFieldInfo());
             listView.headerTitle = ObjectNames.NicifyVariableName(property.displayName);
@@ -27,6 +28,15 @@ namespace Alchemy.Editor.Elements
                 var e = new AlchemyPropertyField(arrayElement, property.GetPropertyType(true), true);
                 element.Add(e);
                 element.Bind(arrayElement.serializedObject);
+                var field = lastFocusedElement?.Q<TextField>();
+                if (field != null)
+                {
+                    field.Focus();
+                    field.SelectRange(field.value.Length, field.value.Length);
+                    using var evt = KeyboardEventBase<KeyDownEvent>.GetPooled('\0', KeyCode.RightArrow, EventModifiers.FunctionKey);
+                    field.SendEvent(evt);
+                }
+                
                 if (events != null)
                 {
                     e.TrackPropertyValue(arrayElement, x =>
@@ -38,6 +48,7 @@ namespace Alchemy.Editor.Elements
             };
             listView.unbindItem = (element, index) =>
             {
+                lastFocusedElement = element;
                 element.Clear();
                 element.Unbind();
             };

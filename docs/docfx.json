@@ -11,7 +11,7 @@
         }
       ],
       "properties": {
-        "AllowUnsafeBlocks": true
+        "AllowUnsafeBlocks": "true"
       },
       "dest": "api",
       "disableGitFeatures": false,
